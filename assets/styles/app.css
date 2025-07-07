@@ -1,0 +1,8 @@
+body {
+    background-color: skyblue;
+}
+
+.card-header-text {
+    text-align: center;
+    font-weight: bold;
+}

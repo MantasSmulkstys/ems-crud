@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="avatar-lg bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 28px;">
+                                {{ employee.name|slice(0, 2)|upper }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h1 class="h3 mb-1">{{ employee.name }}</h1>
+                            <p class="text-muted mb-2">
+                                {{ employee.email }}
+                            </p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-light text-dark border">
+                                    <i class="bi bi-hash me-1"></i>ID: {{ employee.id }}
+                                </span>
+                                {% if employee.hireDate %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-calendar-check me-1"></i>
+                                    Hired {{ employee.hireDate|date('M Y') }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('app_employee_edit', {'id': employee.id}) }}" class="btn btn-warning">
+                                    Edit
+                                </a>
+                                {{ include('employee/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 card-header-text">
+                        Employee Details
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 text-muted">Full Name</h6>
+                                </div>
+                                <p class="mb-0 fw-medium">{{ employee.name }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 text-muted">Email Address</h6>
+                                </div>
+                                <p class="mb-0">
+                                    {{ employee.email }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 text-muted">Phone Number</h6>
+                                </div>
+                                <p class="mb-0 fw-medium">
+                                    {% if employee.phoneNumber %}
+                                        {{ employee.phoneNumber }}
+                                    {% else %}
+                                        <span class="text-muted">Not provided</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 text-muted">Hire Date</h6>
+                                </div>
+                                {% if employee.hireDate %}
+                                    <p class="mb-1 fw-medium">{{ employee.hireDate|date('F d, Y') }}</p>
+                                    <small class="text-muted">{{ employee.hireDate|date('g:i A') }}</small>
+                                {% else %}
+                                    <p class="mb-0 text-muted">Not set</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="border rounded p-3 h-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="mb-0 text-muted">Department</h6>
+                                </div>
+                                {% if employee.department %}
+                                    <p class="mb-1 fw-medium">{{ employee.department.name }}</p>
+                                    {% if employee.department.description %}
+                                        <small class="text-muted">{{ employee.department.description }}</small>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="mb-0 text-muted">Not assigned</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_employee_index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
